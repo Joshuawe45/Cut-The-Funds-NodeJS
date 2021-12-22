@@ -1,24 +1,18 @@
 name: npm audit
 
 on:
-  pull_request:
   push:
-    branches:
-      - master
-      - 'releases/*'
 
 jobs:
-  scan:
-    name: npm audit
+  checkout-repo:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: install dependencies
-        run: npm ci
-      - uses: oke-py/npm-audit-action@v1.8.2
-        with:
-          audit_level: moderate
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          issue_assignees: oke-py
-          issue_labels: vulnerability,test
-          dedupe_issues: true
+    - name: Checkout 🛎️
+      uses: actions/checkout@v2
+    - name : Installing  tool
+      run : |
+        cd $GITHUB_WORKSPACE
+        npm install npm@latest –g
+        npm audit
+        
+
