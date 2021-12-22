@@ -12,7 +12,8 @@ jobs:
     - name : Installing  tool
       run : |
         cd $GITHUB_WORKSPACE
-        npm install npm@latest –g
+        apt update
+        apt install nodejs npm
         npm audit
         
 
