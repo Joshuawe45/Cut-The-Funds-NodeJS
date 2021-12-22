@@ -1,4 +1,4 @@
-name: npm audit
+name: Container Scan 
 
 on:
   push:
@@ -9,11 +9,9 @@ jobs:
     steps:
     - name: Checkout 🛎️
       uses: actions/checkout@v2
-    - name : Installing  tool
+    - name : Scanning for docker image 
       run : |
         cd $GITHUB_WORKSPACE
-        sudo apt update
-        sudo apt install nodejs npm
-        npm audit
-        
+        docker build -t test .
+        docker scan test
 
