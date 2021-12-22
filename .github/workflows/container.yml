@@ -13,5 +13,6 @@ jobs:
       run : |
         cd $GITHUB_WORKSPACE
         docker build -t test .
-        docker scan test
+        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.21.3
+        trivy image test
 
