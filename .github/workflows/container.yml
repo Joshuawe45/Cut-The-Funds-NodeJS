@@ -1,4 +1,4 @@
-name: Container Scan 
+name: IAC
 
 on:
   push:
@@ -9,10 +9,8 @@ jobs:
     steps:
     - name: Checkout 🛎️
       uses: actions/checkout@v2
-    - name : Scanning for docker image 
+    - name : Scanning for dockerfile
       run : |
         cd $GITHUB_WORKSPACE
-        docker build -t test .
-        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.21.3
-        trivy image test
+        docker run --rm -i hadolint/hadolint < Dockerfile
 
