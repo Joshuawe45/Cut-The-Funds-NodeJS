@@ -1,5 +1,7 @@
 //Subjected to SemGrep Scanning
 
+// test
+
 require("./db/db.js");
 const mongoose = require("mongoose");
 const express = require('express');
