@@ -1,22 +1,33 @@
-name: DAST
-
-on:
-  push:
-
-jobs:
-  checkout-repo:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout 🛎️
+name: Sast 
+on: 
+  push: 
+    branches: [ main ] 
+  pull_request: 
+    branches: [ main ] 
+jobs: 
+  sast: 
+    runs-on: ubuntu-latest 
+    name: sast-scan 
+    steps: 
+    - name: Checkout the code 
       uses: actions/checkout@v2
-    - name : running application 
+    - name: njsscan-scan  
       run : |
-         docker-compose up -d
-    - name: ZAP Scan
-      uses: zaproxy/action-full-scan@v0.2.0
+            cd $GITHUB_WORKSPACE 
+            pip install njsscan 
+            njsscan path $(pwd) -o output.json || true 
+    - uses: actions/upload-artifact@v3
+      if: always()
       with:
-       target: 'http://localhost:5000/'
-       rules_file_name: '.zap/rules.tsv'
-       cmd_options: '-a -j'
-
-
+         name: my-artifact
+         path: output.json # or path/to/artifact
+    - name: semgrep-scan  
+      run : |
+            cd $GITHUB_WORKSPACE 
+            python3 -m pip install semgrep
+            semgrep --config "p/nodejsscan" --json -o semgrep.json
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+         name: my-artifact
+         path: semgrep.json # or path/to/artifact
