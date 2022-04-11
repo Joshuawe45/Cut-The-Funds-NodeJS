@@ -1,15 +1,17 @@
-name: Secret Scanning 
-on: 
-  push: 
-    branches: [ master ] 
-  pull_request: 
-    branches: [ master ] 
-jobs: 
-  dast-scanning: 
-    runs-on: ubuntu-latest 
-    name: Secret Scanning 
-    steps: 
-    - name: Checkout the code 
+name: npm audit
+
+on:
+  push:
+
+jobs:
+  checkout-repo:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout 🛎️
       uses: actions/checkout@v2
-    - name: trufflehog-actions-scan
-      uses: edplato/trufflehog-actions-scan@master
+    - name : Installing  tool
+      run : |
+        cd $GITHUB_WORKSPACE
+        sudo apt update
+        sudo apt install nodejs npm
+        npm audit
