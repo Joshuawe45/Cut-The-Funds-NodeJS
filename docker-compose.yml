@@ -17,7 +17,7 @@ services:
     ports:
       - "3306:3306"
   ctf_nodejs:
-    image: joshuawe45/certification:node
+    image: we45/cut-the-funds-nodejs:latest
     environment:
       - MONGO_IP=mongo_db
       - MYSQL_IP=mysql_db
